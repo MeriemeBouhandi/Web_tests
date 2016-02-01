@@ -1,0 +1,33 @@
+{% extends 'roots/base.html' %}
+
+    {% block content %}
+             <div class="portraits">
+                <h1>{{ portraits.prenom }} {{ portraits.nom }}</h1>
+                    <h2>Photo</h2>
+                        <p><img src="{{ portraits.photo.url}}"></p>
+                    <h2>Description</h2>
+                        <p>{{ portraits.description|linebreaks }}</p>
+                    <h2>Faits</h2>
+                        <p>{{ portraits.faits|linebreaks }}</p>
+                    <h2>Fonctions</h2>
+                        <p>{{ portraits.fonctions|linebreaks }}</p>
+                    <h2>Oeuvres</h2>
+                        <p>{{ portraits.oeuvres|linebreaks }}</p>
+                <div class="date">
+                    <p>publié le : {{ portraits.date_publication }}</p>
+                    <p>ajouté par : {{ portraits.ajouteePar }}</p>
+                </div>
+            </div>
+
+            <hr>
+            <a class="btn btn-default" href="{% url 'add_commentaire_to_portraits' pk=portraits.pk %}">Ajouter un commentaire</a>
+            {% for commentaire in portraits.commentaires.all %}
+                <div class="commentaire">
+                    <div class="date">{{ commentaire.date_creation }}</div>
+                    <strong>{{ commentaire.auteur }}</strong>
+                    <p>{{ commentaire.texte|linebreaks }}</p>
+                </div>
+            {% empty %}
+                <p>Il n'y aucun commentaire pour le moment</p>
+            {% endfor %}
+    {% endblock content %}

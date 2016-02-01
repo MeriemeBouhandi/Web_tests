@@ -1,0 +1,16 @@
+{% extends 'roots/base.html' %}
+
+    {% block content %}
+        {% for portraits in portraits %}
+             <div class="portraits">
+                <h1><a href="{% url 'portraits_detail' pk=portraits.pk %}">{{ portraits.prenom }} {{ portraits.nom }}</a></h1>
+                
+                <p>{{ portraits.description|linebreaks }}</p>
+                <div class="date">
+                    <p>publié le : {{ portraits.date_publication }}</p>
+                    <p>ajouté par : {{ portraits.ajouteePar }}</p>
+                    <a href="{% url 'roots.views.portraits_detail' pk=portraits.pk %}">Commentaires: {{ portraits.commentaires.count }}</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% endblock content %}
