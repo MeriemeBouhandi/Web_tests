@@ -1,5 +1,5 @@
 from django import forms
-from .models import Portraits, Commentaire
+from .models import Portraits, Commentaire, UserProfile
 
 class PortraitsForm(forms.ModelForm):
     class Meta:
@@ -10,3 +10,8 @@ class CommentaireForm(forms.ModelForm):
     class Meta:
         model = Commentaire
         fields = ('texte',)
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('avatar', 'pseudo', 'nom', 'prenom', 'adresse_mail',)

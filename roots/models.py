@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 class Portraits(models.Model):
-    photo = models.ImageField(upload_to = '/images', default = 'images/image.jpeg')
+    photo = models.ImageField(upload_to = '/images', default = 'image.jpeg')
     nom = models.CharField(max_length=30)
     prenom = models.CharField(max_length=30)
     date_naissance = models.DateField()
@@ -23,7 +23,7 @@ class Portraits(models.Model):
         return self.prenom + " " + self.nom
 
 class Commentaire(models.Model):
-    portraits = models.ForeignKey('roots.Portraits', related_name='commentaires', default = False)
+    portraits = models.ForeignKey('roots.Portraits', related_name='commentaires')
     auteur = models.ForeignKey('auth.User')
     texte = models.TextField()
     date_creation = models.DateTimeField(default=timezone.now)
@@ -37,12 +37,12 @@ class Commentaire(models.Model):
         return self.texte
 
 class UserProfile(models.Model):
-    avatar = models.ImageField(upload_to = '/images', default = 'images/image.jpeg')
+    avatar = models.ImageField(upload_to = '/images', default = 'image.jpeg')
     nom = models.CharField(max_length=30)
     prenom = models.CharField(max_length=30)
     pseudo = models.CharField(max_length=30)
     adresse_mail = models.EmailField()
-    user = models.OneToOneField(User, unique=True)
+    user = models.OneToOneField(User, primary_key=True)
 
     def __str__(self):
         return "%s %s" % (self.pseudo)

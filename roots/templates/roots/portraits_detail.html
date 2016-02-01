@@ -4,7 +4,7 @@
              <div class="portraits">
                 <h1>{{ portraits.prenom }} {{ portraits.nom }}</h1>
                     <h2>Photo</h2>
-                        <p><img src="{{ portraits.photo.url}}"></p>
+                        <p><img src="{{ portraits.photo.url }}"></p>
                     <h2>Description</h2>
                         <p>{{ portraits.description|linebreaks }}</p>
                     <h2>Faits</h2>
@@ -21,13 +21,21 @@
 
             <hr>
             <a class="btn btn-default" href="{% url 'add_commentaire_to_portraits' pk=portraits.pk %}">Ajouter un commentaire</a>
-            {% for commentaire in portraits.commentaires.all %}
-                <div class="commentaire">
-                    <div class="date">{{ commentaire.date_creation }}</div>
-                    <strong>{{ commentaire.auteur }}</strong>
-                    <p>{{ commentaire.texte|linebreaks }}</p>
-                </div>
+            {% for comment in post.comments.all %}
+              {% if user.is_authenticated or comment.approved_comment %}
+              <div class="comment">
+                  <div class="date">
+                      {{ comment.created_date }}
+                      {% if not comment.approved_comment %}
+                          <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+                          <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}"><span class="glyphicon glyphicon-ok"></span></a>
+                      {% endif %}
+                  </div>
+                  <strong>{{ comment.author }}</strong>
+                  <p>{{ comment.text|linebreaks }}</p>
+              </div>
+              {% endif %}
             {% empty %}
-                <p>Il n'y aucun commentaire pour le moment</p>
-            {% endfor %}
+            <p>No comments here yet :(</p>
+        {% endfor %}
     {% endblock content %}
