@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+
 class Portraits(models.Model):
     photo = models.ImageField(upload_to = '/images', default = 'image.jpeg')
     nom = models.CharField(max_length=30)
@@ -37,11 +38,7 @@ class Commentaire(models.Model):
         return self.texte
 
 class UserProfile(models.Model):
-    avatar = models.ImageField(upload_to = '/images', default = 'image.jpeg')
-    nom = models.CharField(max_length=30)
-    prenom = models.CharField(max_length=30)
-    pseudo = models.CharField(max_length=30)
-    adresse_mail = models.EmailField()
+    avatar = models.ImageField(upload_to = 'images/', default = 'image.jpeg')
     user = models.OneToOneField(User, primary_key=True)
 
     def __str__(self):

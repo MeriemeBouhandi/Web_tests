@@ -49,7 +49,8 @@ def user_profile(request):
         if form.is_valid():
             user_profile = form.save(commit=False)
             user_profile.save()
-            return redirect('roots.views.user_detail', pk=user_profile.pk)
+            #return redirect('roots/user_detail.html')
+            return redirect('roots.views.portraits_detail', pk=user_profile.pk)
     else:
         form = UserProfileForm()
     return render(request, 'roots/user_profile.html', {'form': form})
