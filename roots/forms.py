@@ -1,5 +1,7 @@
 from django import forms
 from .models import Portraits, Commentaire, UserProfile
+from django.contrib.auth.models import User
+
 
 class ConnexionForm(forms.Form):
     username = forms.CharField(label="Nom d'utilisateur", max_length=30)
@@ -20,7 +22,7 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username','email',,'password',)
+        fields = ('username','email','password',)
 
 class UserProfileForm(forms.ModelForm):
     class Meta:

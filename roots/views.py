@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from .models import Portraits
-from .forms import PortraitsForm, CommentaireForm, UserProfileForm
+from .forms import PortraitsForm, CommentaireForm, UserProfileForm, UserForm
 from django.shortcuts import redirect
 
 def portraits_list(request):
@@ -43,17 +43,33 @@ def user_detail(request, pk):
     user_profile = get_object_or_404(User, pk=pk)
     return render(request, 'roots/user_detail.html', {'user_profile': user_profile})
 
-def user_profile(request):
+def register(request):
+    context = RequestContext(request)
+    registered = False
     if request.method == "POST":
-        form = UserProfileForm(request.POST)
-        if form.is_valid():
-            user_profile = form.save(commit=False)
-            user_profile.save()
-            #return redirect('roots/user_detail.html')
-            return redirect('roots.views.portraits_detail', pk=user_profile.pk)
-    else:
-        form = UserProfileForm()
-    return render(request, 'roots/user_profile.html', {'form': form})
+        user_form = UserForm(data = request.POST)
+        profile_form = UserProfileForm(data = request.POST)
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+
+            #Saving the user in user_profile
+            profile = profile_form.save(commit=False)
+            profile.user = user
+
+            if 'avatar' in request.FILES:
+                profile.avatar = request.FILES['avatar']
+
+            profile.save()
+            registered = True
+        else:
+            user_form = UserForm()
+            profile_form = UserProfileForm()
+        return render_to_response('roots/register.html',{'user_form': user_form, 'profile_form': profile_form, 'registered': registered}, context)
+                
+
+
 
 def comment_approve(request, pk):
     comment = get_object_or_404(Comment, pk=pk)

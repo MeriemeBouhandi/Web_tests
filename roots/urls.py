@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^comment/(?P<pk>[0-9]+)/remove/$', views.comment_remove, name='comment_remove'),
 
     url(r'^user_profile/(?P<pk>[0-9]+)/$', views.user_detail, name='user_detail'),
-    url(r'^user_profile/new/$', views.user_profile, name='user_profile'),
+    url(r'^register/$', views.register, name='register'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

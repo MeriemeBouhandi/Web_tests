@@ -1,0 +1,19 @@
+{% extends 'roots/base.html' %}
+
+{% block content %}
+    <body>
+        <h1>Inscription</h1>
+
+        {% if registered %}
+        <strong>Bienvenue ^^</strong>
+        <a href="/roots/">Retour vers Roots</a><br />
+        {% else %}
+        <strong>Inscription par ici :D</strong><br />
+        <form id="user_form" method="post" action="/rango/register/" enctype="multipart/form-data">{% csrf_token %}
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+            <input type="submit" name="submit" value="Register" />
+        </form>
+        {% endif %}
+    </body>
+{% endblock %}
