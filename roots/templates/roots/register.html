@@ -6,10 +6,10 @@
 
         {% if registered %}
         <strong>Bienvenue ^^</strong>
-        <a href="/roots/">Retour vers Roots</a><br />
+        <a href="{% url 'portraits_list' %}">Retour vers Roots</a><br />
         {% else %}
         <strong>Inscription par ici :D</strong><br />
-        <form id="user_form" method="post" action="/rango/register/" enctype="multipart/form-data">{% csrf_token %}
+        <form id="user_form" method="post" action="/register/" enctype="multipart/form-data">{% csrf_token %}
             {{ user_form.as_p }}
             {{ profile_form.as_p }}
             <input type="submit" name="submit" value="Register" />

@@ -14,6 +14,10 @@ urlpatterns = [
 
     url(r'^user_profile/(?P<pk>[0-9]+)/$', views.user_detail, name='user_detail'),
     url(r'^register/$', views.register, name='register'),
+    url(r'^login/$', views.user_login, name='login'),
+    url(r'^restricted/', views.restricted, name='restricted'),
+    url(r'^logout/$', views.user_logout, name='logout'),
+
 ]
 
 urlpatterns += staticfiles_urlpatterns()
